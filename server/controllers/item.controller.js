@@ -3,8 +3,7 @@
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var db = require("../database-mysql");
-const bcrypt=require("bcrypt")
-var User= require('../database-mongo/Item.model.js');
+var Item = require('../database-mongo/Item.model.js');
 
 // UNCOMMENT IF USING MYSQL WITH CALLBACKS
 // var selectAll = function (req, res) {
@@ -17,16 +16,16 @@ var User= require('../database-mongo/Item.model.js');
 //   });
 // };
 
-
-var selectAll = function (req, res) {
- User.find({})
-    .then((items) => {
-      res.status(200).send(items);
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
-};
+// UNCOMMENT IF USING MONGOOSE WITH PROMISES
+// var selectAll = function (req, res) {
+//   Item.find({})
+//     .then((items) => {
+//       res.status(200).send(items);
+//     })
+//     .catch((error) => {
+//       res.status(500).send(error);
+//     });
+// };
 
 
     var signUp =function(req,res){
