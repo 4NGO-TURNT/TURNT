@@ -18,15 +18,15 @@ var User= require('../database-mongo/Item.model.js');
 // };
 
 
-// var selectAll = function (req, res) {
-//  User.find({})
-//     .then((items) => {
-//       res.status(200).send(items);
-//     })
-//     .catch((error) => {
-//       res.status(500).send(error);
-//     });
-// };
+var selectAll = function (req, res) {
+ User.find({})
+    .then((items) => {
+      res.status(200).send(items);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
 
 
     var signUp =function(req,res){
@@ -35,10 +35,10 @@ var User= require('../database-mongo/Item.model.js');
         email :req.body.email,
         password :req.body.password,
         name :req.body.name,
-        lastname:req.body.lastname,
-        bd :req.body.bd,
+        birthday :req.body.birthday,
         country :req.body.country,
-        phoneNumber :req.body.phoneNumber
+        phoneNumber :req.body.phoneNumber,
+        image:req.body.image
       }
      User.create(userData,(err,data)=>{
       if(err){
@@ -72,4 +72,4 @@ var User= require('../database-mongo/Item.model.js');
 //   }
 // };
 
-module.exports = {  signUp,login};
+module.exports = { selectAll, signUp,login};

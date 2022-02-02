@@ -5,11 +5,11 @@ const Salt = 10
 const UserSchema = new mongoose.Schema({
   email :String,
   password :String,
-  name :String,
+   name:String,
   lastname :String,
-  bd :Date,
+  birthday :Date,
   country :String,
-  phoneNumber :String
+  image:String
 });
 UserSchema.pre("save",function(next){
   var user = this
