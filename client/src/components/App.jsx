@@ -20,6 +20,7 @@ class App extends React.Component {
         this.post = this.post.bind(this)
         this.get = this.get.bind(this)
         this.changeView = this.changeView.bind(this)
+        this.changeViewOptions=this.changeViewOptions.bind(this)
         // this.selectionItem=this.selectionItem.bind(this)
     }
     changeView(option) {
@@ -119,7 +120,7 @@ class App extends React.Component {
 
                  <SignUp  change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />
 
-                 <Home viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions.bind(this)}  changevalue={this.change} change={this.change}  addgoal={this.addgoal.bind(this)} person={this.state.person}  items={this.state.items} />
+                 <Home viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions}  changevalue={this.change} change={this.change}  addgoal={this.addgoal.bind(this)} person={this.state.person}  items={this.state.items} />
 
             </div>
 
