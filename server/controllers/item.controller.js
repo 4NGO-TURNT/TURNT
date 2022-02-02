@@ -1,5 +1,5 @@
 // DELETE THIS LINE
-var selectAll = () => {};
+// var selectAll = () => {};
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var db = require("../database-mysql");
@@ -27,6 +27,40 @@ var selectAll = function (req, res) {
     });
 };
 
+
+    var signUp =function(req,res){
+        
+      var userData ={
+        email :req.body.email,
+        password :req.body.password,
+        name :req.body.name,
+        lastname:req.body.lastname,
+        bd :req.body.bd,
+        country :req.body.country,
+        phoneNumber :req.body.phoneNumber
+      }
+     User.create(userData,(err,data)=>{
+      if(err){
+          res.send("error")
+      } else{
+          res.send(data)
+      } 
+     }) 
+    }
+    var login =function(req,res){
+        User.findOne({"email":req.body.email},(err,user)=>{
+            if(!user)
+                res.send("user not found")
+           user.comparePassword(req.body.password,(err,isMatch)=>{
+               if(err){
+                   res.send("bad password")
+               }else{
+                   res.send(isMatch)
+               }
+           }) 
+            
+        })
+    }
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES & ASYNC AWAIT
 // var selectAll = async function (req, res) {
 //   try {
@@ -37,4 +71,4 @@ var selectAll = function (req, res) {
 //   }
 // };
 
-module.exports = { selectAll };
+module.exports = {  signUp,login};
