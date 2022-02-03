@@ -9,8 +9,14 @@ const UserSchema = new mongoose.Schema({
   lastName :String,
   dob :Date,
   country :String,
-  phoneNumber :String
-  
+  image:String,
+  phoneNumber :String,
+  search:[{
+    departure:String,
+    from:Date,
+    to:Date,
+    budget:Number
+  }]
 });
 UserSchema.pre("save",function(next){
   var user = this
