@@ -3,7 +3,8 @@
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var db = require("../database-mysql");
-var Item = require('../database-mongo/Item.model.js');
+var User = require('../database-mongo/Item.model.js');
+
 
 // UNCOMMENT IF USING MYSQL WITH CALLBACKS
 // var selectAll = function (req, res) {
@@ -17,15 +18,15 @@ var Item = require('../database-mongo/Item.model.js');
 // };
 
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES
-// var selectAll = function (req, res) {
-//   Item.find({})
-//     .then((items) => {
-//       res.status(200).send(items);
-//     })
-//     .catch((error) => {
-//       res.status(500).send(error);
+//  var selectAll = function (req, res) {
+//    User.find({})
+//   .then((items) => {
+//      res.status(200).send(items);
+//    })
+//    .catch((error) => {
+//      res.status(500).send(error);
 //     });
-// };
+//  };
 
 
     var signUp =function(req,res){
@@ -46,6 +47,8 @@ var Item = require('../database-mongo/Item.model.js');
           res.send(data)
       } 
      }) 
+     
+
     }
     var login =function(req,res){
         User.findOne({"email":req.body.email},(err,user)=>{
@@ -53,9 +56,12 @@ var Item = require('../database-mongo/Item.model.js');
                 res.send("user not found")
            user.comparePassword(req.body.password,(err,isMatch)=>{
                if(err){
-                   res.send("bad password")
+                   console.log("error")
+               }else if(isMatch===true){
+
+                   res.send(user)
                }else{
-                   res.send(isMatch)
+                   res.send("bad password")
                }
            }) 
             
@@ -71,4 +77,4 @@ var Item = require('../database-mongo/Item.model.js');
 //   }
 // };
 
-module.exports = { selectAll, signUp,login};
+module.exports = { signUp,login};

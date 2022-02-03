@@ -27,7 +27,7 @@ amadeus.referenceData.locations.get({
   console.log(response.data); // first page
   return amadeus.next(response);
 }).then(function(nextResponse){
-  console.log(nextResponse.data); // second page
+  // console.log(nextResponse.data); // second page
 });
 // amadeus.client.get('/v1/shopping/flight-destinations', { origin: 'LAX' }) //to get all possible flights from departure place X
 // .then(function(response){
