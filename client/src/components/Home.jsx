@@ -21,7 +21,7 @@ var Home = (props) => {
             
            
             
-            {props.viewoption===1 && <Newgoal viewAirport={props.viewAirport} predictions={props.predictions}value={props.value} onChange = {props.onChange}changeViewOptions={props.changeViewOptions} addgoal={props.addgoal} change={props.change} changevalue={props.changevalue}/>}
+            {props.viewoption===1 && <Newgoal nameAirport={props.nameAirport} viewAirport={props.viewAirport} predictions={props.predictions}value={props.value} onChange = {props.onChange}changeViewOptions={props.changeViewOptions} addgoal={props.addgoal} change={props.change} changevalue={props.changevalue}/>}
 
             
             <List items={props.items} selectionItem={props.selectionItem} totalInc={props.totalInc} totalOut={props.totalOut}solde={props.solde}/>

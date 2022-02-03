@@ -19,7 +19,8 @@ class App extends React.Component {
             value: '',
             predictions: [],
             airportdata: {},
-            viewAirport:0
+            viewAirport:0,
+            nameAirport:''
         }
         this.onChange = this.onChange.bind(this);
         this.change = this.change.bind(this)
@@ -92,6 +93,7 @@ class App extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+        console.log(e.target.value);
     }
     changefile(e) {
 
@@ -182,7 +184,7 @@ class App extends React.Component {
                 {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change} />}
                 {this.state.view === 'signup' && <SignUp change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />}
 
-                {this.state.view === 'home' && <Home viewAirport={this.state.viewAirport} predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
+                {this.state.view === 'home' && <Home nameAirport={this.state.nameAirport} viewAirport={this.state.viewAirport} predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
 
             </div>
 
