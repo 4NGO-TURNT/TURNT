@@ -5,24 +5,83 @@ import Home from './Home.jsx'
 import axios from 'axios';
 import ForgetAccount from './ForgotAccount.jsx';
 
-var FormData = require('form-data');
 
+var FormData = require('form-data');
+const INPUT_TIMEOUT = 250;
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             person: {},
             items: [],
-            view: 'login',
-            viewoption: 0
+            view: 'home',
+            viewoption: 1,
+            value: '',
+            predictions: [],
+            airportdata: {},
+            viewAirport:0
         }
+        this.onChange = this.onChange.bind(this);
         this.change = this.change.bind(this)
         this.changefile = this.changefile.bind(this)
         this.post = this.post.bind(this)
-        this.get = this.get.bind(this)
+        this.enterAccount = this.enterAccount.bind(this)
         this.changeView = this.changeView.bind(this)
         this.changeViewOptions = this.changeViewOptions.bind(this)
         // this.selectionItem=this.selectionItem.bind(this)
+    }
+    componentDidMount() {
+        axios.get('https://raw.githubusercontent.com/mwgg/Airports/master/airports.json')
+            .then(result => {
+                this.setState({ airportdata: result.data })
+                console.log(this.state.airportdata)
+            })
+    }
+    function(){
+        
+    }
+
+
+
+    getPredictions(value) {
+        // let's say that it's an API call
+        var array=[]
+        var airportname=[]
+        if(value.length>2){
+        for(var key in this.state.airportdata){
+            if (this.state.airportdata[key].tz.toLowerCase().includes(value.toLowerCase())&&this.state.airportdata[key].iata!=='')
+            airportname.push(this.state.airportdata[key].name)
+            // array.push(this.state.airportdata[key])
+            console.log(airportname)
+        }
+        return airportname.slice(0,10)
+        }
+    }
+
+
+    onChange(e) {
+        // clear timeout when input changes value
+        clearTimeout(this.timeout);
+        const value = e.target.value;
+        this.setState({
+            value
+        });
+
+        if (value.length > 2) {
+            // make delayed api call
+            this.timeout = setTimeout(() => {
+                const predictions = this.getPredictions(value);
+                this.setState({
+                    predictions,
+                    viewAirport:1
+                });
+            }, INPUT_TIMEOUT);
+        } else {
+            this.setState({
+                predictions: [],
+                viewAirport:0
+            });
+        }
     }
     changeView(option) {
         this.setState({
@@ -51,9 +110,9 @@ class App extends React.Component {
                 console.log(result.data)
             })
     }
-    get() {
+    enterAccount() {
         if (this.state.username) {
-            axios.get(`/api/items/${this.state.username}`)
+            axios.get(`/api/items/login`)
                 .then(result => {
                     if (result.data[0].username === this.state.username && result.data[0].password === this.state.password) {
                         console.log(result);
@@ -92,17 +151,19 @@ class App extends React.Component {
     // }
 
     addgoal() {
-        var array = this.state.person.goals
-        var newgoal = {
-            goal_lb: this.state.goal_lb,
-            description: this.state.description,
-            category: this.state.category,
-            date: this.state.date
+        if (this.state.departure && this.state.budget && this.state.from && this.state.to) {
+            var array = this.state.person.goals
+            var newgoal = {
+                departure: this.state.departure,
+                bugdet: this.state.budget,
+                from: this.state.from,
+                to: this.state.to
+            }
+            array.push(newgoal)
+            axios.put(`/api/items/${this.state.email}`, { goals: array })
+            this.get()
+            this.setState({ viewoption: 0 })
         }
-        array.push(newgoal)
-        axios.put(`/api/items/${this.state.username}`, { goals: array })
-        this.get()
-        this.setState({ viewoption: 0 })
     }
 
     changeViewOptions(option) {
@@ -117,11 +178,11 @@ class App extends React.Component {
             <div className='app'>
 
 
-                {this.state.view === 'login' && <Login change={this.change} get={this.get} changeView={this.changeView} />}
-                {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change}/>}
+                {this.state.view === 'login' && <Login change={this.change} get={this.enterAccount} changeView={this.changeView} />}
+                {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change} />}
                 {this.state.view === 'signup' && <SignUp change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />}
 
-                {this.state.view === 'home' && <Home viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
+                {this.state.view === 'home' && <Home viewAirport={this.state.viewAirport} predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
 
             </div>
 
