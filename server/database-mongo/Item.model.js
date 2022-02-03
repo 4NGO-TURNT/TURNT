@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   email :String,
   password :String,
 
+
   firstName :String,
   lastName :String,
 
@@ -13,8 +14,10 @@ const UserSchema = new mongoose.Schema({
   dob :Date,
 
 
+
   country :String,
-  image:String
+  image:String,
+  phoneNumber:String
 });
 UserSchema.pre("save",function(next){
   var user = this
