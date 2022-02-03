@@ -17,15 +17,15 @@ var User = require('../database-mongo/Item.model.js');
 // };
 
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES
-var selectAll = function (req, res) {
-  Item.find({})
-    .then((items) => {
-      res.status(200).send(items);
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
-};
+// var selectAll = function (req, res) {
+//   Item.find({})
+//     .then((items) => {
+//       res.status(200).send(items);
+//     })
+//     .catch((error) => {
+//       res.status(500).send(error);
+//     });
+// };
 
 
     var signUp =function(req,res){
@@ -34,10 +34,10 @@ var selectAll = function (req, res) {
         email :req.body.email,
         password :req.body.password,
         name :req.body.name,
-        lastname:req.body.lastname,
-        bd :req.body.bd,
+        birthday :req.body.birthday,
         country :req.body.country,
-        phoneNumber :req.body.phoneNumber
+        phoneNumber :req.body.phoneNumber,
+        image:req.body.image
       }
      User.create(userData,(err,data)=>{
       if(err){
@@ -71,4 +71,4 @@ var selectAll = function (req, res) {
 //   }
 // };
 
-module.exports = {  signUp,login};
+module.exports = { selectAll, signUp,login};
