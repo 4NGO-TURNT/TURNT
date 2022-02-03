@@ -3,6 +3,7 @@ import Login from './Login.jsx';
 import SignUp from './Signup.jsx';
 import Home from './Home.jsx'
 import axios from 'axios';
+import ForgetAccount from './ForgotAccount.jsx';
 
 var FormData = require('form-data');
 
@@ -12,14 +13,15 @@ class App extends React.Component {
         this.state = {
             person: {},
             items: [],
-            view: 'home',
-            viewoption:0
+            view: 'login',
+            viewoption: 0
         }
         this.change = this.change.bind(this)
         this.changefile = this.changefile.bind(this)
         this.post = this.post.bind(this)
         this.get = this.get.bind(this)
         this.changeView = this.changeView.bind(this)
+        this.changeViewOptions = this.changeViewOptions.bind(this)
         // this.selectionItem=this.selectionItem.bind(this)
     }
     changeView(option) {
@@ -66,47 +68,47 @@ class App extends React.Component {
         this.totals
     }
     post() {
-        if (this.state.username && this.state.name && this.state.email && this.state.password) {
+        if (this.state.name && this.state.email && this.state.password) {
             var person = {
-                username: this.state.username,
                 name: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
-                birthday: this.state.birthday,
+                dob: this.state.dob,
+                country: this.state.country,
                 image: this.state.image
             }
             console.log(person);
-            axios.post('/api/items/', person)
+            axios.post('/api/user/signUp', person)
             this.get()
         }
     }
-    
+
     // selectionItem(e){
     //     console.log(e.target.value);
     //     this.setState({
     //         items :this.state.person[e.target.value]
     //     })
-        
+
     // }
 
-    addgoal(){
-        var array=this.state.person.goals
-        var newgoal={
-            goal_lb:this.state.goal_lb,
-            description:this.state.description,
-            category:this.state.category,
-            date:this.state.date
+    addgoal() {
+        var array = this.state.person.goals
+        var newgoal = {
+            goal_lb: this.state.goal_lb,
+            description: this.state.description,
+            category: this.state.category,
+            date: this.state.date
         }
         array.push(newgoal)
-        axios.put(`/api/items/${this.state.username}`,{goals:array})
+        axios.put(`/api/items/${this.state.username}`, { goals: array })
         this.get()
-        this.setState({viewoption: 0})
+        this.setState({ viewoption: 0 })
     }
-   
+
     changeViewOptions(option) {
         console.log('hi');
         this.setState({
-           viewoption: option
+            viewoption: option
         })
     }
 
@@ -115,11 +117,11 @@ class App extends React.Component {
             <div className='app'>
 
 
-                <Login  change={this.change} get={this.get} changeView={this.changeView} />
+                {this.state.view === 'login' && <Login change={this.change} get={this.get} changeView={this.changeView} />}
+                {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change}/>}
+                {this.state.view === 'signup' && <SignUp change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />}
 
-                 <SignUp  change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />
-
-                 <Home viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions.bind(this)}  changevalue={this.change} change={this.change}  addgoal={this.addgoal.bind(this)} person={this.state.person}  items={this.state.items} />
+                {this.state.view === 'home' && <Home viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
 
             </div>
 
