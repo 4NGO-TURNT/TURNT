@@ -28,24 +28,17 @@ var User = require('../database-mongo/Item.model.js');
 //  };
 
 
-
-var signUp = function (req, res) {
-
-  var userData = {
-    email: req.body.email,
-    password: req.body.password,
-    firstName: req.body.fisrtName,
-    lastName: req.body.lastName,
-    dob: req.body.dob,
-    country: req.body.country,
-    phoneNumber: req.body.phoneNumber
-  }
-  User.create(userData, (err, data) => {
-    if (err) {
-      res.send("error")
-    } else {
-      res.send(data)
-
+    var signUp =function(req,res){
+        
+      var userData ={
+        email :req.body.email,
+        password :req.body.password,
+        name :req.body.name,
+        birthday :req.body.birthday,
+        country :req.body.country,
+        phoneNumber :req.body.phoneNumber,
+        image:req.body.image
+      }
      User.create(userData,(err,data)=>{
       if(err){
           res.send("error")
@@ -72,7 +65,7 @@ var signUp = function (req, res) {
            }) 
             
         })
-
+    }
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES & ASYNC AWAIT
 // var selectAll = async function (req, res) {
 //   try {
@@ -83,7 +76,4 @@ var signUp = function (req, res) {
 //   }
 // };
 
-
-module.exports = { selectAll, signUp,login};
-
-
+module.exports = { signUp,login};
