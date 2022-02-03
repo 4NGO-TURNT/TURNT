@@ -3,7 +3,7 @@
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var db = require("../database-mysql");
-var Item = require('../database-mongo/Item.model.js');
+var User = require('../database-mongo/Item.model.js');
 
 // UNCOMMENT IF USING MYSQL WITH CALLBACKS
 // var selectAll = function (req, res) {
