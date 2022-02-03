@@ -5,7 +5,6 @@
 // var db = require("../database-mysql");
 var User = require('../database-mongo/Item.model.js');
 
-
 // UNCOMMENT IF USING MYSQL WITH CALLBACKS
 // var selectAll = function (req, res) {
 //   db.query("SELECT * FROM items", (err, items, fields) => {

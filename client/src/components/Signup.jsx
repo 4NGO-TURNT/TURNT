@@ -1,4 +1,5 @@
-import React from 'react'
+
+import React from 'react';
 var SignUp = (props) => (
     <div>
         <h1>SignUp</h1>
@@ -22,3 +23,4 @@ var SignUp = (props) => (
 
 )
 export default SignUp
+

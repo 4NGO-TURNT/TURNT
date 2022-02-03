@@ -1,13 +1,23 @@
 import React from 'react'
 var Login = (props) => (
     <div>
-        <h1>Login</h1>
-        <label htmlFor="">username</label>
-        <input type="text" onChange={props.change} name='username' />
-        <label htmlFor="">password</label>
-        <input type="password" onChange={props.change} name="password" />
-        <button onClick={props.get}>LogIn</button>
-        <p name='signup' onClick={()=>props.changeView('signup')}>create new account</p>
+      {/* <h1 id="p">FLYDO </h1>  */}
+      
+      <div id="sign">
+        <form  id="input" >
+          <input id="i1" onChange={props.change}  type="email" placeholder="Enter email" /> <br /> <br />
+          <input id="i2"  onChange={props.change}  type="password" placeholder="Enter password"/>
+        </form>
+        <div>
+          <button onClick={props.get} id="but1">login</button>
+        </div>
+      <a href="#" id="text">Forgot Email/Password?</a>
+      </div>
+      <div>
+        <a href="#" id="text2" onClick={()=>props.changeView('signup')}>Create new account</a>
+      </div>
     </div>
+  
+    
 )
 export default Login
