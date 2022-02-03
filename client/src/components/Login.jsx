@@ -11,10 +11,10 @@ var Login = (props) => (
         <div>
           <button onClick={props.get} id="but1">login</button>
         </div>
-      <a href="#" id="text">Forgot Email/Password?</a>
+      <p id="text" onClick={()=>props.changeView('forgetaccount')}>Forgot Email/Password?</p>
       </div>
       <div>
-        <a href="#" id="text2" onClick={()=>props.changeView('signup')}>Create new account</a>
+        <p  id="text2" onClick={()=>props.changeView('signup')}>Create new account</p>
       </div>
     </div>
   

@@ -2,9 +2,9 @@ import React from 'react'
 var Newgoal = (props) => (
     <div>
         <h1>New goal</h1>
-        <label htmlFor="">the goal</label>
+        <label htmlFor="">From</label>
         <input type="text" name='goal_lb' onChange={props.change} />
-        <label htmlFor="">depart</label>
+        <label htmlFor="">to</label>
         <select name='category' onChange={props.changevalue}>
             <option value=""></option>
             <option value="vision">vision (more 5 years)</option>
