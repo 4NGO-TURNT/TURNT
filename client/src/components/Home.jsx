@@ -8,7 +8,7 @@ import { Image } from 'cloudinary-react';
 var Home = (props) => {
     return (
         <div>
-            <h1>Home</h1>
+            <h1>T.U.R.N.T</h1>
             <nav>
                 
                 <button onClick={()=>props.changeViewOptions(1)}>new Goal</button>

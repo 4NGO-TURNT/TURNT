@@ -13,7 +13,7 @@ class App extends React.Component {
         this.state = {
             person: {},
             items: [],
-            view: 'login',
+            view: 'home',
             viewoption: 0
         }
         this.change = this.change.bind(this)
