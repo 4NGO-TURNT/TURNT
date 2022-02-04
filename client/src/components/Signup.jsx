@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import React from 'react';
+=======
+import React from 'react'
+>>>>>>> sarra-benali-main
 var SignUp = (props) => (
     <div>
         {/* <form  id="input" > */}
@@ -28,4 +32,7 @@ var SignUp = (props) => (
 
 )
 export default SignUp
+<<<<<<< HEAD
 
+=======
+>>>>>>> sarra-benali-main

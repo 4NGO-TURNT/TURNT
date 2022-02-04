@@ -21,12 +21,12 @@ var amadeus = new Amadeus({
   clientSecret: 'CO8KNZccxiwKG0gH'
 });
 
-amadeus.client.get('/v1/shopping/flight-destinations', { origin: 'LAX' }) //to get all possible flights from departure place X
-.then(function(response){
-  console.log(response.data);
-  }).catch(function(responseError){
-  console.log(responseError.code);
-  });;
+  amadeus.client.get('/v1/shopping/flight-destinations', { origin: 'MAD' }) //to get all possible flights from departure place X
+  .then(function(response){
+    console.log(response.data);
+    }).catch(function(responseError){
+    console.log(responseError.code);
+    });;
 //
 // amadeus.client.get('/v2/reference-data/locations/airports',  'LAX' ) //to get all possible flights from departure place X
 // .then(function(response){
