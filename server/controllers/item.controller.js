@@ -4,6 +4,9 @@
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var db = require("../database-mysql");
 var User = require('../database-mongo/Item.model.js');
+const nodemailer = require("nodemailer")
+
+//var mail = require('../mail.js')
 
 // UNCOMMENT IF USING MYSQL WITH CALLBACKS
 // var selectAll = function (req, res) {
@@ -31,25 +34,29 @@ var User = require('../database-mongo/Item.model.js');
     var signUp =function(req,res){
         
       var userData ={
-        email :req.body.email,
-        password :req.body.password,
-        name :req.body.name,
-        birthday :req.body.birthday,
-        country :req.body.country,
-        phoneNumber :req.body.phoneNumber,
+        email:req.body.email,
+        password:req.body.password,
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        dob:req.body.dob,
+        country:req.body.country,
+        phoneNumber:req.body.phoneNumber,
         image:req.body.image
       }
+  
      User.create(userData,(err,data)=>{
+         
       if(err){
+        
           res.send("error")
-      } else{
+      } else if(data){
           res.send(data)
+          sendConfirmation(req.body.email,req.body.firstName,req.body.lastName)
       } 
      }) 
-     
 
     }
-    var login =function(req,res){
+    var login = function(req,res){
         User.findOne({"email":req.body.email},(err,user)=>{
             if(!user)
                 res.send("user not found")
@@ -76,4 +83,46 @@ var User = require('../database-mongo/Item.model.js');
 //   }
 // };
 
-module.exports = { signUp,login};
+
+
+const transporter =nodemailer.createTransport({
+    service:"Outlook365",
+    host: "smtp.office365.com",
+    port: "587",
+    tls:{
+        ciphers:"SSLv3",
+        rejectUnauthorized:false,
+    },
+    auth :{
+        user:"aymenEX1@outlook.com",
+        pass: "aymen123456789"
+    },
+   
+});
+const sendConfirmation = async (
+    email,
+    firstname,
+    lastname
+)=>{
+    const mailOptions={
+        from:"aymenEX1@outlook.com",
+        to:email,
+        subject:"Hello : Account",
+        text:"Hello"+ " "+firstname+" " + lastname+" " +"Welcome to TRUNT"
+        
+    };
+
+try {
+    await transporter.sendMail(mailOptions,function(err,info){
+        console.log(err)
+        if(err){
+            throw new Error(err)
+        }
+    })
+}catch (err){
+    throw new Error(err)
+}
+}
+
+
+module.exports = {signUp,login,sendConfirmation};

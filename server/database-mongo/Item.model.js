@@ -5,20 +5,20 @@ const Salt = 10
 const UserSchema = new mongoose.Schema({
   email :String,
   password :String,
-
-
   firstName :String,
   lastName :String,
-
-
-  dob :Date,
-
-
-
+  dob :String,
   country :String,
   image:String,
-  phoneNumber:String
+  phoneNumber :String,
+  search:[{
+    departure:String,
+    from:Date,
+    to:Date,
+    budget:Number
+  }]
 });
+
 UserSchema.pre("save",function(next){
   var user = this
   bcrypt.genSalt(Salt,function(err,salt){

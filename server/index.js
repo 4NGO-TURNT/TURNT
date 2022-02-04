@@ -16,19 +16,19 @@ app.listen(PORT, function () {
   console.log("listening on port 3000!");
 });
 
-var amadeus = new Amadeus({
-  clientId: 'FaAGy9uXQC45C5kx7iGMcqCIDnOz30Wb',
-  clientSecret: 'xr6kuyRNV9HUUDco'
-});
-amadeus.referenceData.locations.get({
-  keyword: 'FCO',
-  subType: 'AIRPORT,CITY'
-}).then(function(response){
-  console.log(response.data); // first page
-  return amadeus.next(response);
-}).then(function(nextResponse){
-  // console.log(nextResponse.data); // second page
-});
+// var amadeus = new Amadeus({
+//   clientId: 'FaAGy9uXQC45C5kx7iGMcqCIDnOz30Wb',
+//   clientSecret: 'xr6kuyRNV9HUUDco'
+// });
+// amadeus.referenceData.locations.get({
+//   keyword: 'FCO',
+//   subType: 'AIRPORT,CITY'
+// }).then(function(response){
+//   console.log(response.data); // first page
+//   return amadeus.next(response);
+// }).then(function(nextResponse){
+//   // console.log(nextResponse.data); // second page
+// });
 // amadeus.client.get('/v1/shopping/flight-destinations', { origin: 'LAX' }) //to get all possible flights from departure place X
 // .then(function(response){
 //   console.log(response.data);
