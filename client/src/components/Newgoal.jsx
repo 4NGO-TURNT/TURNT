@@ -3,10 +3,9 @@ var Newgoal = (props) => (
     <div>
       
         <label >Departure</label>
-        <input className='fl_search' type="div" name='departure' value={()=>{if(props.nameAirport!==''){return props.nameAirport}}} onChange={props.onChange} />
-        {props.viewAirport===1 &&
+        <input type="div" name='departure' value={props.value} onChange={props.onChange} />        {props.viewAirport===1 &&
         <div>
-            <select className='fl_search' name='nameAirport' onChange={props.change}>
+            <select  name='nameAirport' onChange={props.onChangeselection}>
                 {
                     props.predictions.map((item, index) => (
                         <option value={item} key={index + item}>{item}</option>

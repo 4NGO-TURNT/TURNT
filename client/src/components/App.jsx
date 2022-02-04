@@ -53,11 +53,15 @@ class App extends React.Component {
             .toLowerCase()
             .includes(value.toLowerCase()) &&
           this.state.airportdata[key].iata !== ""
-        )
+        ) {
           airportname.push(this.state.airportdata[key].name);
-        // array.push(this.state.airportdata[key])
-        console.log(airportname);
+          array.push(this.state.airportdata[key]);
+          console.log(airportname);
+        }
       }
+      this.setState({
+        airportselected: array,
+      });
       return airportname.slice(0, 10);
     }
   }
@@ -156,24 +160,31 @@ class App extends React.Component {
   // }
 
   addgoal() {
-    if (
-      this.state.departure &&
-      this.state.budget &&
-      this.state.from &&
-      this.state.to
-    ) {
-      var array = this.state.person.goals;
-      var newgoal = {
-        departure: this.state.departure,
-        bugdet: this.state.budget,
-        from: this.state.from,
-        to: this.state.to,
-      };
-      array.push(newgoal);
-      axios.put(`/api/items/${this.state.email}`, { goals: array });
-      this.get();
-      this.setState({ viewoption: 0 });
+    console.log("ok");
+    // if (this.state.departure && this.state.budget && this.state.from && this.state.to) {
+    var array = [];
+    console.log(this.state.airportselected);
+    for (var i = 0; i < this.state.airportselected.length; i++) {
+      if (this.state.airportselected[i].name === this.state.value) {
+        var iata = this.state.airportselected[i].iata;
+        this.setState({
+          iata: iata,
+        });
+      }
     }
+    console.log(iata);
+    var newsearch = {
+      iata: iata,
+      departure: this.state.value,
+      from: this.state.from,
+      to: this.state.to,
+      budget: this.state.budget,
+    };
+    array.push(newsearch);
+    axios.put(`/api/user/${this.state.email}`, { search: array });
+    //     this.get()
+    //     this.setState({ viewoption: 0 })
+    // }
   }
 
   changeViewOptions(option) {
