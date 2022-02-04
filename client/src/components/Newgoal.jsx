@@ -7,6 +7,7 @@ var Newgoal = (props) => (
         {props.viewAirport===1 &&
         <div>
             <select  name='nameAirport' onChange={props.onChangeselection}>
+                <option value="">select airport</option>
                 {
                     props.predictions.map((item, index) => (
                         <option value={item} key={index + item}>{item}</option>

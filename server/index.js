@@ -17,20 +17,30 @@ app.listen(PORT, function () {
 });
 
 var amadeus = new Amadeus({
-  clientId: 'FaAGy9uXQC45C5kx7iGMcqCIDnOz30Wb',
-  clientSecret: 'xr6kuyRNV9HUUDco'
+  clientId: 'uudAgmNB2N4XzrXGKtraGSwCyxvy9BCs',
+  clientSecret: 'z7ElNJADQoAKkf7r'
 });
-app.get('')
-// amadeus.client.get('/v1/shopping/flight-destinations', { origin: 'LAX' }) //to get all possible flights from departure place X
-// .then(function(response){
-//   console.log(response.data);
-//   }).catch(function(responseError){
-//   console.log(responseError.code);
-//   });;
+var iata
+app.post('/api/user/iata', (req, res) => {
+  iata = req.body.iata;
+  console.log(iata)
+
+  amadeus.client.get('/v1/shopping/flight-destinations', { origin: iata ,maxPrice:50}) //to get all possible flights from departure place X
+    .then(function (response) {
+      console.log(response.data);
+      res.send(response.data)
+    }).catch(function (responseError) {
+      console.log(responseError.code);
+      res.send(responseError.code)
+    });
+  
+})
+// amadeus.client.get('/v2/reference-data/locations/airports',  iata ) //to get all possible flights from departure place X
+  // .then(function(response){
+  //   console.log(response.data);
+  //   }).catch(function(responseError){
+  //   console.log(responseError.code,'err');
+  //   });
+
 //
-// amadeus.client.get('/v2/reference-data/locations/airports',  'LAX' ) //to get all possible flights from departure place X
-// .then(function(response){
-//   console.log(response.data);
-//   }).catch(function(responseError){
-//   console.log(responseError.code);
-//   });;
+//

@@ -10,11 +10,11 @@ var Home = (props) => {
         <div>
             <h1>T.U.R.N.T</h1>
             <nav>
-                
-                <button onClick={()=>props.changeViewOptions(1)}>new Goal</button>
+                {props.person.lastName === undefined && <button onClick={()=>props.changeView('login')}>Login</button>}
                 <Image className='img' cloudName='magico' public_id={props.person.image} />
-                <h4 >{props.person.username}</h4>
-                <button>profil</button>
+                <h4 >hello {props.person.lastName}</h4>
+                {props.person.lastName !== undefined && <button onClick={()=>props.changeView('profil')}>profil</button>}
+                
             </nav>
             
             

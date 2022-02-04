@@ -2,7 +2,11 @@ import React from 'react';
 
 const ListItem = (props) => (
   <div>
-    { props.item.amount } { props.item.catecory } { props.item.date } { props.item.description }
+    { props.item.destination} | 
+    { props.item.departureDate } | 
+    { props.item.origin } | 
+    { props.item.returnDate } |
+    { props.item.price.total}
   </div>
 )
 
