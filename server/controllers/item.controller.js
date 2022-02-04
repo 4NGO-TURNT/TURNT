@@ -17,27 +17,28 @@ var User = require('../database-mongo/Item.model.js');
 // };
 
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES
-//  var selectAll = function (req, res) {
-//    User.find({})
-//   .then((items) => {
-//      res.status(200).send(items);
-//    })
-//    .catch((error) => {
-//      res.status(500).send(error);
+// var selectAll = function (req, res) {
+//   Item.find({})
+//     .then((items) => {
+//       res.status(200).send(items);
+//     })
+//     .catch((error) => {
+//       res.status(500).send(error);
 //     });
-//  };
+// };
+
 
 
 var signUp = function (req, res) {
-
   var userData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
-    firstName: req.body.fisrtName,
-    lastName: req.body.lastName,
     dob: req.body.dob,
     country: req.body.country,
-    phoneNumber: req.body.phoneNumber
+    phoneNumber: req.body.phoneNumber,
+    image: req.body.image
   }
   User.create(userData, (err, data) => {
     if (err) {
@@ -47,8 +48,8 @@ var signUp = function (req, res) {
     }
   })
 }
-
 var login = function (req, res) {
+
   User.findOne({ "email": req.body.email }, (err, user) => {
     if (!user)
       res.send("user not found")
@@ -62,17 +63,18 @@ var login = function (req, res) {
 
   })
 }
-var update = function(req,res){
-var filter= req.params.email
-var data= req.body
-User.findOneAndUpdate(filter,data)
-.then((items)=>{
-  res.status(200).send(items)
-})
-.catch((err)=>{
-  res.status(500).send(err)
-})
+var update = function (req, res) {
+  var filter = req.params.email
+  var data = req.body
+  User.findOneAndUpdate(filter, data)
+    .then((items) => {
+      res.status(200).send(items)
+    })
+    .catch((err) => {
+      res.status(500).send(err)
+    })
 }
+
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES & ASYNC AWAIT
 // var selectAll = async function (req, res) {
 //   try {
@@ -83,4 +85,5 @@ User.findOneAndUpdate(filter,data)
 //   }
 // };
 
-module.exports = { signUp, login,update };
+
+module.exports = { update, signUp, login };

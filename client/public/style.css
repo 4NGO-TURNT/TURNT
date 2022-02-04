@@ -1,8 +1,13 @@
-#body{
+/* #body{
     background-image: url(https://images.unsplash.com/photo-1530122706536-c80ca06b2aad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
     background-repeat:no-repeat;
     background-size:cover;
-}
+} */
+body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: #5a5a5a;
+  }
 
 #i1{
     border-radius: 25px;

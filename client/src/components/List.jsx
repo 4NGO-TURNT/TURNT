@@ -3,13 +3,13 @@ import ListItem from "./ListItem.jsx";
 
 const List = (props) => (
   <div id='list'>
-    <h4>Your Goal: </h4>
-    <select name="" id="" onChange={props.selectionItem} >
+    {/* <h4>Your Goal: </h4> */}
+    {/* <select name="" id="" onChange={props.selectionItem} >
       <option value=""></option>
        <option value='outlay' >First Goal</option>
       <option value="income" >Second Goal</option>
       <option value="goals" >THird Goal</option> 
-    </select>
+    </select> */}
     
     {/* <div>
       <h4>Total Balance: {props.solde}</h4>

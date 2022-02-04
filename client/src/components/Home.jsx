@@ -9,12 +9,12 @@ var Home = (props) => {
     return (
         <div>
             <h1>T.U.R.N.T</h1>
-            <nav>
-                
-                <button onClick={()=>props.changeViewOptions(1)}>new Goal</button>
+            <nav className="p-3 bg-dark text-white">
+                {props.person.lastName === undefined && <button className='btn btn-outline-light me-2' onClick={()=>props.changeView('login')}>Login</button>}
                 <Image className='img' cloudName='magico' public_id={props.person.image} />
-                <h4 >{props.person.username}</h4>
-                <button>profil</button>
+               { props.person.lastName !== undefined && <h4 >Welcome {props.person.lastName} !</h4>}
+                {props.person.lastName !== undefined && <button onClick={()=>props.changeView('profil')}>profil</button>}
+                
             </nav>
             
             

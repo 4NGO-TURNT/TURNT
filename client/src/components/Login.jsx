@@ -5,11 +5,11 @@ var Login = (props) => (
       
       <div id="sign">
         <form  id="input" >
-          <input id="i1" onChange={props.change}  type="email" placeholder="Enter email" /> <br /> <br />
-          <input id="i2"  onChange={props.change}  type="password" placeholder="Enter password"/>
+          <input id="i1" name='email' onChange={props.change}  type="email" placeholder="Enter email" /> <br /> <br />
+          <input id="i2" name='password' onChange={props.change}  type="password" placeholder="Enter password"/>
         </form>
         <div>
-          <button onClick={props.get} id="but1">login</button>
+          <button onClick={props.enterAccount} id="but1">login</button>
         </div>
       <p id="text" onClick={()=>props.changeView('forgetaccount')}>Forgot Email/Password?</p>
       </div>

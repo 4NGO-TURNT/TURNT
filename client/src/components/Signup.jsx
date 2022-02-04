@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-
 import React from 'react';
-=======
-import React from 'react'
->>>>>>> sarra-benali-main
 var SignUp = (props) => (
     <div>
         {/* <form  id="input" > */}
@@ -25,14 +20,10 @@ var SignUp = (props) => (
         <label htmlFor="">image</label>
         <input type="file" name='image'onChange={props.changefile} />
         
-        <button onClick={props.post}>SignUp</button>
+        <button onClick={props.newAccount}>SignUp</button>
         <p name='login' onClick={()=>props.changeView('login')}>Login</p>
         {/* </form> */}
     </div>
 
 )
 export default SignUp
-<<<<<<< HEAD
-
-=======
->>>>>>> sarra-benali-main
