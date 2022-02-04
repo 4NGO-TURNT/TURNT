@@ -6,6 +6,7 @@ import axios from 'axios';
 import ForgetAccount from './ForgotAccount.jsx';
 
 
+
 var FormData = require('form-data');
 const INPUT_TIMEOUT = 250;
 class App extends React.Component {
@@ -13,14 +14,15 @@ class App extends React.Component {
         super(props);
         this.state = {
             person: {},
-            items: [],
-            view: 'home',
-            viewoption: 1,
+            items: [],// selection of 
+            view: 'home', //principal views 
+            viewoption: 1,// new goal view
             value: '',
-            predictions: [],
-            airportdata: {},
-            viewAirport:0,
-            nameAirport:''
+            predictions: [],// selection airports name
+            airportdata: {},//all the data of api
+            viewAirport: 0,// view airports 
+            airportselected: [],// selection airport
+            iata: ''
         }
         this.onChange = this.onChange.bind(this);
         this.change = this.change.bind(this)
@@ -29,6 +31,8 @@ class App extends React.Component {
         this.enterAccount = this.enterAccount.bind(this)
         this.changeView = this.changeView.bind(this)
         this.changeViewOptions = this.changeViewOptions.bind(this)
+        this.onChangeselection = this.onChangeselection.bind(this)
+        this.addgoal = this.addgoal.bind(this)
         // this.selectionItem=this.selectionItem.bind(this)
     }
     componentDidMount() {
@@ -38,24 +42,29 @@ class App extends React.Component {
                 console.log(this.state.airportdata)
             })
     }
-    function(){
-        
+    onChangeselection(e) {
+        this.setState({ value: e.target.value })
     }
 
 
 
     getPredictions(value) {
         // let's say that it's an API call
-        var array=[]
-        var airportname=[]
-        if(value.length>2){
-        for(var key in this.state.airportdata){
-            if (this.state.airportdata[key].tz.toLowerCase().includes(value.toLowerCase())&&this.state.airportdata[key].iata!=='')
-            airportname.push(this.state.airportdata[key].name)
-            // array.push(this.state.airportdata[key])
-            console.log(airportname)
-        }
-        return airportname.slice(0,10)
+        var array = []
+        var airportname = []
+        if (value.length > 2) {
+            for (var key in this.state.airportdata) {
+                if (this.state.airportdata[key].tz.toLowerCase().includes(value.toLowerCase())
+                    && this.state.airportdata[key].iata !== '') {
+                    airportname.push(this.state.airportdata[key].name)
+                    array.push(this.state.airportdata[key])
+                    console.log(airportname)
+                }
+            }
+            this.setState({
+                airportselected: array
+            })
+            return airportname.slice(0, 10)
         }
     }
 
@@ -74,13 +83,13 @@ class App extends React.Component {
                 const predictions = this.getPredictions(value);
                 this.setState({
                     predictions,
-                    viewAirport:1
+                    viewAirport: 1
                 });
             }, INPUT_TIMEOUT);
         } else {
             this.setState({
                 predictions: [],
-                viewAirport:0
+                viewAirport: 0
             });
         }
     }
@@ -153,19 +162,31 @@ class App extends React.Component {
     // }
 
     addgoal() {
-        if (this.state.departure && this.state.budget && this.state.from && this.state.to) {
-            var array = this.state.person.goals
-            var newgoal = {
-                departure: this.state.departure,
-                bugdet: this.state.budget,
-                from: this.state.from,
-                to: this.state.to
+        console.log('ok');
+        // if (this.state.departure && this.state.budget && this.state.from && this.state.to) {
+            var array = []
+        console.log(this.state.airportselected)
+        for (var i = 0; i < this.state.airportselected.length; i++) {
+            if (this.state.airportselected[i].name === this.state.value) {
+                var iata=this.state.airportselected[i].iata
+                this.setState({
+                    iata: iata
+                })
             }
-            array.push(newgoal)
-            axios.put(`/api/items/${this.state.email}`, { goals: array })
-            this.get()
-            this.setState({ viewoption: 0 })
         }
+        console.log(iata);
+            var newsearch = {
+                iata:iata,
+                departure: this.state.value,
+                from: this.state.from,
+                to: this.state.to,
+                budget: this.state.budget
+            }
+            array.push(newsearch)
+            axios.put(`/api/user/${this.state.email}`, { search: array })
+        //     this.get()
+        //     this.setState({ viewoption: 0 })
+        // }
     }
 
     changeViewOptions(option) {
@@ -184,7 +205,10 @@ class App extends React.Component {
                 {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change} />}
                 {this.state.view === 'signup' && <SignUp change={this.change} changefile={this.changefile} post={this.post} changeView={this.changeView} />}
 
-                {this.state.view === 'home' && <Home nameAirport={this.state.nameAirport} viewAirport={this.state.viewAirport} predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption} changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)} person={this.state.person} items={this.state.items} />}
+                {this.state.view === 'home' && <Home onChangeselection={this.onChangeselection} viewAirport={this.state.viewAirport}
+                    predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption}
+                    changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)}
+                    person={this.state.person} items={this.state.items} />}
 
             </div>
 
