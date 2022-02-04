@@ -47,19 +47,31 @@ var signUp = function (req, res) {
     }
   })
 }
+
 var login = function (req, res) {
   User.findOne({ "email": req.body.email }, (err, user) => {
     if (!user)
       res.send("user not found")
     user.comparePassword(req.body.password, (err, isMatch) => {
-      if (err) {
-        res.send("bad password")
+      if (isMatch) {
+        res.send(user)
       } else {
-        res.send(isMatch)
+        res.send("bad password")
       }
     })
 
   })
+}
+var update = function(req,res){
+var filter= req.params.email
+var data= req.body
+User.findOneAndUpdate(filter,data)
+.then((items)=>{
+  res.status(200).send(items)
+})
+.catch((err)=>{
+  res.status(500).send(err)
+})
 }
 // UNCOMMENT IF USING MONGOOSE WITH PROMISES & ASYNC AWAIT
 // var selectAll = async function (req, res) {
@@ -71,4 +83,4 @@ var login = function (req, res) {
 //   }
 // };
 
-module.exports = { signUp, login };
+module.exports = { signUp, login,update };
