@@ -73,3 +73,10 @@
     top: 600px;
     left: 230px;
 }
+.fl_search{
+    border-radius: 10px;
+    background: #dbdbdb;
+    padding: 20px;
+    width: 120px;
+    height: 2px;
+  }
