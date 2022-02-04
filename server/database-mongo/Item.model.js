@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
     departure:String,
     from:Date,
     to:Date,
-    budget:Number
+    budget:Number,
+    iata:String
   }]
 });
 UserSchema.pre("save",function(next){
