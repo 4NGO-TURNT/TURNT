@@ -23,7 +23,8 @@ class App extends React.Component {
             airportdata: {},//all the data of api
             viewAirport: 1,// view airports 
             airportselected: [],// selection airport
-            iata: ''
+            iata: '',
+            alertlogin: 1
         }
         this.onChange = this.onChange.bind(this);
         this.change = this.change.bind(this)
@@ -34,7 +35,8 @@ class App extends React.Component {
         this.changeViewOptions = this.changeViewOptions.bind(this)
         this.onChangeselection = this.onChangeselection.bind(this)
         this.addgoal = this.addgoal.bind(this)
-        // this.selectionItem=this.selectionItem.bind(this)
+        this.search = this.search.bind(this)
+
     }
     componentDidMount() {
         axios.get('https://raw.githubusercontent.com/mwgg/Airports/master/airports.json')
@@ -83,8 +85,8 @@ class App extends React.Component {
         if (value.length > 2) {
             for (var key in this.state.airportdata) {
                 if (this.state.airportdata[key].tz.toLowerCase().includes(value.toLowerCase())
-                    && this.state.airportdata[key].iata !== '' && 
-                    this.state.airportdata[key].name.includes('Inter') ) {
+                    && this.state.airportdata[key].iata !== '' &&
+                    this.state.airportdata[key].name.includes('Inter')) {
                     airportname.push(this.state.airportdata[key].name)
                     array.push(this.state.airportdata[key])
                     console.log(airportname)
@@ -122,7 +124,7 @@ class App extends React.Component {
             });
         }
     }
-   
+
     enterAccount() {
         // if (this.state.email) {
         var obj = {
@@ -169,50 +171,105 @@ class App extends React.Component {
 
     }
 
-    // selectionItem(e){
-    //     console.log(e.target.value);
-    //     this.setState({
-    //         items :this.state.person[e.target.value]
-    //     })
 
-    // }
 
-    addgoal() {
+    search() {
         console.log('ok');
 
         // if (this.state.departure && this.state.budget && this.state.from && this.state.to) {
-        var array = this.state.person.search
+
         console.log(this.state.airportselected)
+        var iata
         for (var i = 0; i < this.state.airportselected.length; i++) {
-            if (this.state.airportselected[i].name === this.state.value) {
-                var iata = this.state.airportselected[i].iata
+            if (this.state.airportselected[i].name === this.state.nameAirport) {
+                iata = this.state.airportselected[i].iata
                 this.setState({
                     iata: iata
                 })
             }
         }
         console.log(iata);
+        var maxPrice = this.state.budget
+        if (iata !== undefined) {
+            if (maxPrice === '')
+                maxPrice = undefined
+            axios.post('/api/user/iata', { iata: iata, maxPrice: maxPrice })
+                .then(res => {
+                    console.log(res.data)
+                    var array = []
+                    var arr = []
+                    var arrayres=res.data
+                    if (typeof arrayres === 'object') {
+                        
+                        for (var i = 0; i < arrayres.length; i++) {
+                            var obj = {
+                                origin : arrayres[i].origin,
+                                destination : arrayres[i].destination,
+                                departureDate : arrayres[i].departureDate,
+                                returnDate :arrayres[i].returnDate,
+                                price : arrayres[i].price.total
+                            }
+                            arr.push(obj)
+                        }
+                        if (!this.state.from && !this.state.to) {
+                            array = arr
+                        } else {
+                            for (var i = 0; i < arr.length; i++) {
+                                if (arr[i].departureDate >= this.state.from && arr[i].returnDate <= this.state.to) {
+                                    array.push(arr[i])
+                                }
+                            }
+                        }
+                        for (var i = 0; i < array.length; i++) {
+                            for (var key in this.state.airportdata) {
+                                if (array[i].origin === this.state.airportdata[key].iata) {
+                                    array[i].origin = this.state.airportdata[key].tz
+                                }
+                                if (array[i].destination === this.state.airportdata[key].iata) {
+                                    array[i].destination = this.state.airportdata[key].tz
+                                }
+                            }
 
-        axios.post('/api/user/iata', { iata: iata })
-            .then(res => {
-                console.log(res.data)
-                this.setState({items:res.data})
-            })
-        if (this.state.person.lastName !== undefined) {
-            var newsearch = {
-                iata: iata,
-                departure: this.state.value,
-                from: this.state.from,
-                to: this.state.to,
-                budget: this.state.budget
-            }
-            array.push(newsearch)
-            axios.put(`/api/user/${this.state.person.email}`, { search: array })
-                .then(result => this.setState({ person: result.data }))
+                        }
+                        this.setState({ items: array })
+                        console.log(this.state.items); 
+                    }
+
+                })
+
             //     
             //     this.setState({ viewoption: 0 })
             // }
         }
+        
+    }
+
+    addgoal() {
+        if (this.state.person.lastName !== undefined) {
+            if (this.state.iata !== '') {
+                var array = this.state.person.search
+                var newsearch = {
+                    iata: this.state.iata,
+                    departure: this.state.value,
+                    from: this.state.from,
+                    to: this.state.to,
+                    budget: this.state.budget,
+                    result: this.state.items
+                }
+                array.push(newsearch)
+                axios.put(`/api/user/${this.state.person.email}`, { search: array })
+                    .then(result => {
+                        console.log(result.data);
+                        this.setState({})
+                        this.state.person.search=array
+                        console.log(this.state.person);
+            })}
+        } else {
+            this.setState({
+                alertlogin: 0
+            })
+        }
+
     }
 
     changeViewOptions(option) {
@@ -231,11 +288,11 @@ class App extends React.Component {
                 {this.state.view === 'forgetaccount' && <ForgetAccount changeView={this.changeView} change={this.change} />}
                 {this.state.view === 'signup' && <SignUp change={this.change} changefile={this.changefile} newAccount={this.newAccount} changeView={this.changeView} />}
 
-                {this.state.view === 'home' && <Home items={this.state.items} changeView={this.changeView} onChangeselection={this.onChangeselection} viewAirport={this.state.viewAirport}
+                {this.state.view === 'home' && <Home alertlogin={this.state.alertlogin} search={this.search} items={this.state.items} changeView={this.changeView} onChangeselection={this.onChangeselection} viewAirport={this.state.viewAirport}
                     predictions={this.state.predictions} value={this.state.value} onChange={this.onChange} viewoption={this.state.viewoption}
                     changeViewOptions={this.changeViewOptions} changevalue={this.change} change={this.change} addgoal={this.addgoal.bind(this)}
                     person={this.state.person} items={this.state.items} />}
-                    {this.state.view === 'profil' && <Profil changeView={this.changeView} person={this.state.person} />}
+                {this.state.view === 'profil' && <Profil changeView={this.changeView} person={this.state.person} />}
 
             </div>
 

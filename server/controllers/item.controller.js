@@ -87,4 +87,3 @@ var update = function (req, res) {
 
 
 module.exports = { update, signUp, login };
-

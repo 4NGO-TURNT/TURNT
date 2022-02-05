@@ -21,11 +21,13 @@ var amadeus = new Amadeus({
   clientSecret: 'z7ElNJADQoAKkf7r'
 });
 var iata
+var maxPrice
 app.post('/api/user/iata', (req, res) => {
   iata = req.body.iata;
+maxPrice=req.body.maxPrice
   console.log(iata)
 
-  amadeus.client.get('/v1/shopping/flight-destinations', { origin: iata ,maxPrice:50}) //to get all possible flights from departure place X
+  amadeus.client.get('/v1/shopping/flight-destinations', { origin: iata ,maxPrice:maxPrice}) //to get all possible flights from departure place X
     .then(function (response) {
       console.log(response.data);
       res.send(response.data)

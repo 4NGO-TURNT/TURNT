@@ -16,10 +16,13 @@ const List = (props) => (
       <h4>Total INCOMES: {props.totalInc}</h4>
       <h4>Total OUTLAYS: {props.totalOut}</h4>
     </div> */}
+    { props.person.lastName!== undefined &&
+      props.person.search.map((elem,i)=>(<button>{elem.departure}/{elem.budget}</button>))
+    }
     There are {props.items.length} items.
     {props.items.map((item, index) => (
       <div key={index}>
-        <ListItem item={item} />
+        <ListItem item={item}  />
       </div>
     ))}
   </div>

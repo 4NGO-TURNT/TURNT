@@ -1,4 +1,3 @@
-
 import React from 'react';
 var SignUp = (props) => (
     <div>
@@ -28,4 +27,3 @@ var SignUp = (props) => (
 
 )
 export default SignUp
-
