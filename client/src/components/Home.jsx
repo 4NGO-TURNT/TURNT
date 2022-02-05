@@ -7,13 +7,14 @@ import { Image } from 'cloudinary-react';
 
 var Home = (props) => {
     return (
-        <div>
-            <h1>T.U.R.N.T</h1>
+        <div id='home-div'>
+            
             <nav className="p-3 bg-dark text-white">
-                {props.person.lastName === undefined && <button className='btn btn-outline-light me-2' onClick={()=>props.changeView('login')}>Login</button>}
+            
+                {props.person.lastName === undefined && <button id='login-home' class="btn btn-warning" onClick={()=>props.changeView('login')}>Login</button>}
                 <Image className='img' cloudName='magico' public_id={props.person.image} />
                { props.person.lastName !== undefined && <h4 >Welcome {props.person.lastName} !</h4>}
-                {props.person.lastName !== undefined && <button onClick={()=>props.changeView('profil')}>profil</button>}
+                {props.person.lastName !== undefined && <button  onClick={()=>props.changeView('profil')}>profil</button>}
                 
             </nav>
             

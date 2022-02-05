@@ -8,7 +8,38 @@ body {
     padding-bottom: 3rem;
     color: #5a5a5a;
   }
+#top-bar-login{
+    margin-top: -1.3cm;
+    
+}
+#signup-div{
+padding-left: 0cm;
+margin-top: -1.3cm;
+margin-bottom: -3cm;
 
+
+}
+
+#but-signup{
+    margin-top: 0.5cm;
+}
+#home-div{
+    margin-top: -1.3cm;
+}
+#forget-div{
+    height: 14.2cm;
+}
+#forget-sub{
+    width: 20cm;
+    margin-left: 6cm;
+}
+#login-home{
+    margin-left: 30cm;
+}
+#bot-bar-login{
+    margin-bottom: -7cm;
+    height: 1.2cm;
+}
 #i1{
     border-radius: 25px;
     border: 2px solid #3596d6;

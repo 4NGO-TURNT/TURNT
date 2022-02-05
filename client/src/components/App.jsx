@@ -16,7 +16,7 @@ class App extends React.Component {
         this.state = {
             person: {}, //user 
             items: [],// selection of results
-            view: 'home', //principal views 
+            view: 'signup', //principal views 
             viewoption: 1,// new goal view
             value: '', //airport name
             predictions: [],// selection airports name
